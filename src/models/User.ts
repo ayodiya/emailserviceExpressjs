@@ -12,6 +12,7 @@ const userSchema: Schema<IUser> = new Schema<IUser>(
     name: {
       type: String,
       required: true,
+      lowercase: true,
     },
     totalMessages: {
       type: Number,
