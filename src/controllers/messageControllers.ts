@@ -30,8 +30,56 @@ export const sendMessage = async (req: Request, res: Response) => {
 
     res.status(201).json({
       status: "success",
-      msg: " message sent successfully",
+      msg: "Message sent successfully",
       newMessage,
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "failed",
+      msg: "Server error, please try again",
+    });
+  }
+};
+
+export const getUserMessages = async (req: Request, res: Response) => {
+  const { user } = req.params;
+
+  try {
+    const allMessages = await Message.find({ receiver: user.toLowerCase() });
+
+    res.status(200).json({
+      status: "success",
+      msg: `${user} messages fetched successfully`,
+      allMessages,
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "failed",
+      msg: "Server error, please try again",
+    });
+  }
+};
+
+export const setMessageRead = async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  try {
+    const messageExists = await Message.findById(id);
+
+    if (!messageExists) {
+      return res.status(400).json({
+        status: "failed",
+        msg: "Message does not exists",
+      });
+    }
+
+    messageExists.isRead = true;
+
+    await messageExists.save();
+
+    res.status(200).json({
+      status: "success",
+      msg: `Message set to read successfully`,
     });
   } catch (error) {
     res.status(500).json({
