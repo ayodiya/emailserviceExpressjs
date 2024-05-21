@@ -14,7 +14,7 @@ const app = express();
 
 //import routes
 import userRoutes from "./routes/userRoutes";
-
+import messageRoutes from "./routes/messageRoutes";
 // Init Middleware
 app.use(express.json());
 app.use(cors());
@@ -27,6 +27,7 @@ app.get("/", (req: Request, res: Response) => {
 
 // routes
 app.use("/api/user", userRoutes);
+app.use("/api/message", messageRoutes);
 
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);
