@@ -30,3 +30,29 @@ export const addUser = async (req: Request, res: Response) => {
     });
   }
 };
+
+export const getUser = async (req: Request, res: Response) => {
+  const { name } = req.params;
+
+  try {
+    const nameExists = await User.findOne({ name });
+
+    if (!nameExists) {
+      return res.status(400).json({
+        status: "failed",
+        msg: "User with the name does not exists",
+      });
+    }
+
+    res.status(201).json({
+      status: "success",
+      msg: "User fetched successfully",
+      nameExists,
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "failed",
+      msg: "Server error, please try again",
+    });
+  }
+};
