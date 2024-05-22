@@ -77,8 +77,17 @@ const setMessageRead = (req, res) => __awaiter(void 0, void 0, void 0, function*
                 msg: "Message does not exists",
             });
         }
+        const findUser = yield User_1.default.findOne({ name: messageExists === null || messageExists === void 0 ? void 0 : messageExists.receiver });
+        if (!findUser) {
+            return res.status(400).json({
+                status: "failed",
+                msg: "User not found",
+            });
+        }
+        findUser.totalUnreadMessages -= 1;
         messageExists.isRead = true;
         yield messageExists.save();
+        yield findUser.save();
         res.status(200).json({
             status: "success",
             msg: `Message fetched successfully`,
