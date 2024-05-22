@@ -73,9 +73,21 @@ export const setMessageRead = async (req: Request, res: Response) => {
       });
     }
 
+    const findUser = await User.findOne({ name: messageExists?.receiver });
+
+    if (!findUser) {
+      return res.status(400).json({
+        status: "failed",
+        msg: "User not found",
+      });
+    }
+
+    findUser.totalUnreadMessages -= 1;
+
     messageExists.isRead = true;
 
     await messageExists.save();
+    await findUser.save();
 
     res.status(200).json({
       status: "success",
