@@ -10,6 +10,6 @@ import {
 
 router.post("/send-message", sendMessage);
 router.get("/get-messages/:user", getUserMessages);
-router.put("/message-read/:id", setMessageRead);
+router.get("/message-read/:id", setMessageRead);
 
 export default router;
