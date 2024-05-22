@@ -47,6 +47,6 @@ Thumbs.db
 *.mov
 *.wmv
 
-env
+.env
 node_modules
 
