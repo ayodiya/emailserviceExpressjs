@@ -79,7 +79,8 @@ export const setMessageRead = async (req: Request, res: Response) => {
 
     res.status(200).json({
       status: "success",
-      msg: `Message set to read successfully`,
+      msg: `Message fetched successfully`,
+      messageExists,
     });
   } catch (error) {
     res.status(500).json({
